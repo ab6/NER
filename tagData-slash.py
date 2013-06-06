@@ -20,8 +20,10 @@ testPlain = args.test[1]
 
 def tag(filePath):
 	#previous = ""
-	default = subprocess.check_output(["java", "-mx1500m", "-cp", ner + "\\stanford-ner.jar", "edu.stanford.nlp.ie.crf.CRFClassifier", "-loadClassifier", ner + "\\classifiers\\english.all.3class.distsim.crf.ser.gz", "-textFile", filePath, "-outputFormat", "slashTags"])
-	custom = subprocess.check_output(["java", "-mx1500m", "-cp", ner + "\\stanford-ner.jar", "edu.stanford.nlp.ie.crf.CRFClassifier", "-loadClassifier", ner + "\\classifiers\\" + model, "-textFile", filePath, "-outputFormat", "slashTags"])
+	default = subprocess.check_output(["java", "-mx1500m", "-cp", ner + "\\stanford-ner.jar", "edu.stanford.nlp.ie.crf.CRFClassifier", 
+		"-loadClassifier", ner + "\\classifiers\\english.all.3class.distsim.crf.ser.gz", "-textFile", filePath, "-outputFormat", "slashTags"])
+	custom = subprocess.check_output(["java", "-mx1500m", "-cp", ner + "\\stanford-ner.jar", "edu.stanford.nlp.ie.crf.CRFClassifier", 
+		"-loadClassifier", ner + "\\classifiers\\" + model, "-textFile", filePath, "-outputFormat", "slashTags"])
 	
 	tags = []
 	for gold, test in zip(default.split(), custom.split()):
