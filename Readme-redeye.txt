@@ -7,7 +7,7 @@
 
 4. Annotate resulting training file (tagged.txt)
 
-5. Ensure that testProperties.prop is in stanford folder and that the first line of the file has the actual path to the corrected training file
+5. Ensure that both Gazetteer.txt and testProperties.prop are in stanford folder and that the first line of the prop file has the actual path to the corrected training file
 
 6. Train model with the following command from within the tagger folder:
 java -cp stanford-ner.jar edu.stanford.nlp.ie.crf.CRFClassifier -prop testProperties.prop
