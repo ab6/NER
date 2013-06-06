@@ -6,15 +6,18 @@ import re
 parser = argparse.ArgumentParser(description='Tag plain text.')
 parser.add_argument('nerPath', help='Folder path for ner tagger.')
 parser.add_argument('modelName', help='Name of the additional trained model.')
-parser.add_argument('-tag', help='Folder path for root folder of data.')
+parser.add_argument('-tag', nargs=2, help='Folder paths for root folder of data and folder for output files.')
 parser.add_argument('-test', nargs=2, help='Provide paths to tagged test document and plain text test doc.')
 args = parser.parse_args()
 
 ner = args.nerPath
 model = args.modelName
-folder = args.tag
-testFile = args.test[0]
-testPlain = args.test[1]
+if args.tag:
+	folder = args.tag[0]
+	outputFolder = args.tag[1]
+if args.test:
+	testFile = args.test[0]
+	testPlain = args.test[1]
 
 ##Need to fix /tab problem in test and training sets
 
@@ -79,18 +82,18 @@ def compareTags(gold, test, delimiter):
 	print "recall = " + str(recall)
 	print "f1 = " + str(f1)
 
-if folder:
+if args.tag:
 	for root, directory, files in os.walk(folder):
 		for name in files:
 			if name.find(".tagged") == -1:
 				filePath = os.path.join(root, name)
 				tags = tag(filePath)
-				h = open(filePath + ".tagged", 'w')
-				for tag in tags:
-					h.write(tag.replace("/", "\t") + "\n")
+				h = open(outputFolder + "\\" + name + ".tagged", 'w')
+				for entry in tags:
+					h.write(entry.replace("/", "\t") + "\n")
 				h.close()
 
-if testFile:
+if args.test:
 	test = open(testFile, 'r')
 	testTagged = test.read()
 	test.close()
